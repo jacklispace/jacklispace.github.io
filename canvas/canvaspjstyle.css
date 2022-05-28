@@ -1,0 +1,46 @@
+/* colour tone reference: https://jxnblk.github.io/hello-color/?c=173561 */
+  body{
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    background-color: #e3c79f;
+  }
+  h1{
+    color:#173561 ;
+    font-size: 60px;
+  }
+  .row{
+    padding: 10px;
+  }
+  
+  .btn-primary{
+    background-color: #173561;
+    color: #e3c79f;
+    transition: 0.3s;
+    border: #173561;
+  }
+  
+  .btn-primary:hover{
+    background-color: #173561;
+    color: #e3c79f;
+    opacity: 0.8;
+  }
+  
+  .btn-primary:focus{
+    background-color: #173561;
+    color: #e3c79f;
+    border: #173561;
+    opacity: 0.8;
+  }
+  
+  .canvas-container{
+    position: relative;
+    width:800px;
+    height:450px;
+    top: 50%;  /* position the top  edge of the element at the middle of the parent */
+    left: 50%; /* position the left edge of the element at the middle of the parent */
+    transform: translate(-50%);
+  }
+  
+  .canvas {
+    border: 2px solid black;
+    position: absolute;
+  }

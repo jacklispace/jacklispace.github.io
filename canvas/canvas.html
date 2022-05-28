@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="canvaspjstyle.css"/>
+    <title>Canvas Project Group 2</title>
+  </head>
+  <body>        
+    <section id="header">
+      <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-xl-8 offset-lg-2 offset-xl-2 text-center">
+              <h1 class="text-center">CanvasPJ</h1>
+            </div>
+        </div>  
+      </div>
+    </section>
+    <section id="canvaspanel">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-xl-8 col-md-8 offset-lg-2 offset-xl-2 offset-md-2 text-center">
+            <button class="btn btn-primary" id="drawing-line"><i class="fa-solid fa-2x fa-pen"></i></button>
+            <button class="btn btn-primary" id="drawing-circle"><i class="fa-solid fa-2x fa-circle"></i></button>
+            <button class="btn btn-primary" id="drawing-square"><i class="fa-solid fa-2x fa-square"></i></button>
+            <button class="btn btn-primary" id="drawing-rectangle"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-rectangle" width="32" height="35" viewBox="0 0 24 24" stroke-width="3" stroke="#e3c79f" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <rect x="3" y="5" width="18" height="14" rx="2" />
+            </svg></button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-8 col-xl-8 col-md-8 offset-lg-2 offset-xl-2 offset-md-2 text-center">
+            <button class="btn btn-primary" id="function-undo"><i class="fa-solid fa-2x fa-rotate-left"></i></button>
+            <a id="function-download" class="btn btn-primary fa-solid fa-2x fa-download" href="" download="my-canvas-works.png"></a>
+            <button class="btn btn-primary" id="function-eraser"><i class="fa-solid fa-2x fa-eraser"></i></button>
+            <a id="function-redo" class="btn btn-primary fa-solid fa-2x fa-trash" href="javascript:confirmRefresh();"></a>          
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div id="canvas-container" class="canvas-container">
+        <canvas class="canvas" id="canvas-real" width="800px" height="450px"></canvas>
+        <canvas class="canvas" id="canvas-draft" width="800px" height="450px"></canvas>
+      </div>
+    </section>
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://kit.fontawesome.com/eb8282defa.js" crossorigin="anonymous"></script>
+    <script src="function-download.js"></script> 
+    <script src="./canvas-common.js"></script>
+    <script src="./drawing-line.js"></script>
+    <script src="./drawing-circle.js"></script>
+    <script src="./drawing-square.js"></script>
+    <script src="./drawing-rectangle.js"></script>
+    <script src="./function-eraser.js"></script>
+    <script type="text/javascript">
+      $("#drawing-line").click(function () {
+        currentFunction = new DrawingLine(contextReal, contextDraft);
+      });
+      $("#drawing-circle").click(function () {
+        currentFunction = new DrawingCircle(contextReal, contextDraft);
+      });
+      $("#drawing-rectangle").click(function () {
+        currentFunction = new DrawingRectangle(contextReal, contextDraft);
+      });
+      $("#drawing-square").click(function () {
+        currentFunction = new DrawingSquare(contextReal, contextDraft);
+      });
+      $("#function-eraser").click(function () {
+        currentFunction = new FunctionEraser(contextReal, contextDraft);
+      });
+      $("#function-undo").click(function () {
+        if (undoIndex <= 0) {
+          undoIndex = -1;
+          undoArray.pop();
+          contextReal.clearRect(0, 0, canvasReal.width, canvasReal.height);
+        } else {
+        undoIndex -= 1;
+        undoArray.pop();
+        contextReal.putImageData(undoArray[undoIndex], 0, 0)
+        }
+        console.log(undoIndex);
+      });
+      // https://www.tutorialspoint.com/How-to-change-button-label-in-confirm-box-using-JavaScript
+      function confirmRefresh() {
+      var okToRefresh = confirm("Do you really want to redo the canvas?");
+      if (okToRefresh)
+        {
+          setTimeout("location.reload(true);",100);
+        }
+      }
+    </script>
+  </body>
+</html>
